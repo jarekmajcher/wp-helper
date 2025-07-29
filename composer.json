@@ -1,0 +1,21 @@
+{
+    "name": "jarekmajcher/wp-helper",
+    "description": "WP Theme Library",
+    "type": "package",
+    "license": "MIT",
+    "version": "3.0.0",
+    "authors": [
+        {
+            "name": "Jarek Majcher",
+            "email": "jarek@majcher.me"
+        }
+    ],
+    "autoload": {
+        "files": ["src/WpHelper.php"],
+        "psr-4": {
+            "Jm\\WpHelper\\Helper\\": "src/Helper",
+            "Jm\\WpHelper\\Timber\\": "src/Timber",
+            "Jm\\WpHelper\\Wordpress\\": "src/Wordpress"
+        }
+    }
+}
