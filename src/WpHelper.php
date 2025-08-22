@@ -17,16 +17,11 @@ class WpHelper {
     protected $manifest;
 
     public function __construct() {
-        $this->themePath = get_stylesheet_directory() . '/';
-        $this->themeUrl = get_stylesheet_directory_uri() . '/';
+        $this->themePath = get_stylesheet_directory();
+        $this->themeUrl = get_stylesheet_directory_uri();
         $this->themeRelativeUrl = substr(parse_url($this->themeUrl, PHP_URL_PATH), 1);
         $this->documentRoot = $_SERVER['DOCUMENT_ROOT'];
-        $this->siteUrl = get_site_url() . '/';
-
-        $this->manifest = array(
-            'rwd' => $this->themePath . 'public/rwd/manifest.json',
-            'admin' => $this->themePath . 'public/admin/manifest.json'
-        );
+        $this->siteUrl = get_site_url();
     }
 
     /**
@@ -35,9 +30,11 @@ class WpHelper {
      * @return string
      */
     protected function get_filename($n, $file) : string {
-        $manifest = $this->themePath . 'public/' . $n . '/manifest.json';
+
+        $manifest = $this->themePath . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . $n . DIRECTORY_SEPARATOR . 'manifest.json';
         $package = new Package(new JsonManifestVersionStrategy($manifest));
-        return  $package->getUrl($this->themeRelativeUrl . 'public/' . $n . '/' . $file);
+
+        return  $package->getUrl( $n . DIRECTORY_SEPARATOR . $file);
     }
 
     /**

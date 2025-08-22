@@ -32,8 +32,9 @@ class Shortcodes extends \Jm\WpHelper\WpHelper {
             'alt' => ''
         ], $atts);
 
-        $image = sprintf('<img src="%1$s" alt="%2$s" class="%3$s" />' ,
-            $this->get_filename('rwd', 'images/' . $config['image']),
+        $image = sprintf('<img src="%1$s/public/%2$s" alt="%3$s" class="%4$s" />' ,
+            $this->themeUrl,
+            $this->get_filename('rwd', 'images' . DIRECTORY_SEPARATOR . $config['image']),
             $config['alt'],
             $config['class']
         );

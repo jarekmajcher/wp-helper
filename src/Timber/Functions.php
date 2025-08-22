@@ -99,7 +99,7 @@ class Functions extends \Jm\WpHelper\WpHelper {
      * @return string
      */
     function asset($file, $module = 'rwd') : string {
-        return $this->get_filename($module, $file);
+        return $this->themeUrl . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . $this->get_filename($module, $file);
     }
 
     /**

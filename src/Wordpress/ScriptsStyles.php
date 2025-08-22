@@ -26,8 +26,8 @@ class ScriptsStyles extends \Jm\WpHelper\WpHelper {
      */
     private function style($n, $file, $print) : void {
         $file = $this->get_filename($n,$file . '.css');
-        $filePath = $this->documentRoot . $file;
-        $fileUrl = $this->siteUrl . $file;
+        $filePath = $this->themePath . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . $file;
+        $fileUrl = $this->themeUrl . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . $file;
 
         if(@file_exists($filePath) && 0 != filesize($filePath)) {
             if ($print) {
@@ -47,8 +47,8 @@ class ScriptsStyles extends \Jm\WpHelper\WpHelper {
      */
     private function script($n, $file, $print) : void {
         $file = $this->get_filename($n,$file . '.js');
-        $filePath = $this->documentRoot . $file;
-        $fileUrl = $this->siteUrl . $file;
+        $filePath = $this->themePath . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . $file;
+        $fileUrl = $this->themeUrl . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . $file;
 
         if(@file_exists($filePath) && 0 != filesize($filePath)) {
             if ($print) {
@@ -117,14 +117,14 @@ class ScriptsStyles extends \Jm\WpHelper\WpHelper {
         $styles = ['admin'];
         foreach($styles as $style) {
             $fileName = $this->get_filename('admin', $style . '.css');
-            $filePath = $this->siteUrl . $fileName;
+            $filePath = $this->siteUrl . DIRECTORY_SEPARATOR . $fileName;
             wp_enqueue_style('style-' . $style, $filePath, null);
         }
 
         $scripts = ['admin'];
         foreach($scripts as $script) {
             $fileName = $this->get_filename('admin', $script . '.js');
-            $filePath = $this->siteUrl . $fileName;
+            $filePath = $this->siteUrl . DIRECTORY_SEPARATOR . $fileName;
             wp_enqueue_script('script-' . $script, $filePath, array('wp-blocks', 'wp-element'));
         }
     }
