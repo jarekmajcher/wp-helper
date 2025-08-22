@@ -29,12 +29,12 @@ class WpHelper {
      * @param $file
      * @return string
      */
-    protected function get_filename($n, $file) : string {
+    protected function get_asset_filename($n, $file) : string {
 
         $manifest = $this->themePath . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . $n . DIRECTORY_SEPARATOR . 'manifest.json';
         $package = new Package(new JsonManifestVersionStrategy($manifest));
 
-        return  $package->getUrl( $n . DIRECTORY_SEPARATOR . $file);
+        return  $package->getUrl( $this->themeRelativeUrl . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . $n . DIRECTORY_SEPARATOR . $file);
     }
 
     /**

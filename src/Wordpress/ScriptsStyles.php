@@ -25,9 +25,9 @@ class ScriptsStyles extends \Jm\WpHelper\WpHelper {
      * @return void
      */
     private function style($n, $file, $print) : void {
-        $file = $this->get_filename($n,$file . '.css');
-        $filePath = $this->themePath . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . $file;
-        $fileUrl = $this->themeUrl . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . $file;
+        $file = $this->get_asset_filename($n,$file . '.css');
+        $filePath = $this->documentRoot . DIRECTORY_SEPARATOR . $file;
+        $fileUrl = $this->siteUrl . DIRECTORY_SEPARATOR . $file;
 
         if(@file_exists($filePath) && 0 != filesize($filePath)) {
             if ($print) {
@@ -46,9 +46,9 @@ class ScriptsStyles extends \Jm\WpHelper\WpHelper {
      * @return void
      */
     private function script($n, $file, $print) : void {
-        $file = $this->get_filename($n,$file . '.js');
-        $filePath = $this->themePath . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . $file;
-        $fileUrl = $this->themeUrl . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . $file;
+        $file = $this->get_asset_filename($n,$file . '.js');
+        $filePath = $this->documentRoot . DIRECTORY_SEPARATOR . $file;
+        $fileUrl = $this->siteUrl . DIRECTORY_SEPARATOR . $file;
 
         if(@file_exists($filePath) && 0 != filesize($filePath)) {
             if ($print) {
@@ -116,14 +116,14 @@ class ScriptsStyles extends \Jm\WpHelper\WpHelper {
     public function load_admin() : void {
         $styles = ['admin'];
         foreach($styles as $style) {
-            $fileName = $this->get_filename('admin', $style . '.css');
+            $fileName = $this->get_asset_filename('admin', $style . '.css');
             $filePath = $this->siteUrl . DIRECTORY_SEPARATOR . $fileName;
             wp_enqueue_style('style-' . $style, $filePath, null);
         }
 
         $scripts = ['admin'];
         foreach($scripts as $script) {
-            $fileName = $this->get_filename('admin', $script . '.js');
+            $fileName = $this->get_asset_filename('admin', $script . '.js');
             $filePath = $this->siteUrl . DIRECTORY_SEPARATOR . $fileName;
             wp_enqueue_script('script-' . $script, $filePath, array('wp-blocks', 'wp-element'));
         }
