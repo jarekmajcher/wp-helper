@@ -53,7 +53,7 @@ class ScriptsStyles extends \Jm\WpHelper\WpHelper {
             if ($print) {
                 echo sprintf('<script>%s</script>', file_get_contents($filePathAbsolute)) . PHP_EOL;
             } else {
-                wp_enqueue_script('script-' . $n . '-' . $file, $filePath, ['wp-blocks', 'wp-element'], filemtime($filePathAbsolute));
+                wp_enqueue_script('script-' . $n . '-' . $file, $filePath, [], filemtime($filePathAbsolute));
             }
         }
     }
