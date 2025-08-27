@@ -46,15 +46,14 @@ class ScriptsStyles extends \Jm\WpHelper\WpHelper {
      * @return void
      */
     private function script($n, $file, $print) : void {
-        $file = $this->get_asset_filename($n,$file . '.js');
-        $filePath = $this->documentRoot . DIRECTORY_SEPARATOR . $file;
-        $fileUrl = $this->siteUrl . DIRECTORY_SEPARATOR . $file;
+        $filePath = $this->get_asset_filename($n,$file . '.js');
+        $filePathAbsolute = $this->documentRoot . DIRECTORY_SEPARATOR . $filePath;
 
-        if(@file_exists($filePath) && 0 != filesize($filePath)) {
+        if(@file_exists($filePathAbsolute) && 0 != filesize($filePathAbsolute)) {
             if ($print) {
-                echo sprintf('<script>%s</script>', file_get_contents($filePath)) . PHP_EOL;
+                echo sprintf('<script>%s</script>', file_get_contents($filePathAbsolute)) . PHP_EOL;
             } else {
-                echo sprintf( '<script src="%s"></script>', $fileUrl ) . PHP_EOL;
+                wp_enqueue_script('script-' . $n . '-' . $file, $filePath, ['wp-blocks', 'wp-element'], filemtime($filePathAbsolute));
             }
         }
     }
@@ -118,14 +117,30 @@ class ScriptsStyles extends \Jm\WpHelper\WpHelper {
         foreach($styles as $style) {
             $fileName = $this->get_asset_filename('admin', $style . '.css');
             $filePath = $this->siteUrl . DIRECTORY_SEPARATOR . $fileName;
-            wp_enqueue_style('style-' . $style, $filePath, null);
+            $filePathAbsolute = $this->documentRoot . DIRECTORY_SEPARATOR . $fileName;
+            if(@file_exists($filePathAbsolute) && 0 != filesize($filePathAbsolute)) {
+                wp_enqueue_style('style-' . $style, $filePath, null, filemtime($filePathAbsolute));
+            }
         }
 
         $scripts = ['admin'];
         foreach($scripts as $script) {
             $fileName = $this->get_asset_filename('admin', $script . '.js');
             $filePath = $this->siteUrl . DIRECTORY_SEPARATOR . $fileName;
-            wp_enqueue_script('script-' . $script, $filePath, array('wp-blocks', 'wp-element'));
+            $filePathAbsolute = $this->documentRoot . DIRECTORY_SEPARATOR . $fileName;
+            if(@file_exists($filePathAbsolute) && 0 != filesize($filePathAbsolute)) {
+                wp_enqueue_script('script-' . $script, $filePath, ['wp-blocks', 'wp-element'], filemtime($filePathAbsolute));
+            }
+        }
+
+        $runtimeFiles = ['admin'];
+        foreach($runtimeFiles as $file) {
+            $runtimeFilePath = $this->get_asset_filename($file, 'runtime.js');
+            $runtimeFilePathAbsolute = $this->documentRoot . DIRECTORY_SEPARATOR . $runtimeFilePath;
+
+            if(@file_exists($runtimeFilePathAbsolute) && 0 != filesize($runtimeFilePathAbsolute)) {
+                echo sprintf('<script>%s</script>', file_get_contents($runtimeFilePathAbsolute)) . PHP_EOL;
+            }
         }
     }
 }
