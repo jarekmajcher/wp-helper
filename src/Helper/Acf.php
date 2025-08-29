@@ -1,8 +1,6 @@
 <?php
 namespace Jm\WpHelper\Helper;
 
-/**
- */
 class Acf
 {
     /**
@@ -12,9 +10,11 @@ class Acf
     public static function get_post_assets($type = null) : ?array {
         if($type !== null) {
             $field = (!is_home()) ? get_field($type) : get_field($type, get_option('page_for_posts'));
-            return preg_split('/\r\n|\r|\n/', $field);
+            if(null !== $field) {
+                return preg_split('/\r\n|\r|\n/', $field);
+            }
         }
-        return null;
+        return [];
     }
 }
 
