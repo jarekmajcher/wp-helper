@@ -93,47 +93,4 @@ class Wordpress
             ksort($menu);
         }
     }
-
-    /**
-     * @param $taxonomy
-     * @param $postType
-     * @param $parent
-     * @param $d
-     * @return mixed
-     */
-    public static function get_taxonomy_hierarchy($taxonomy, $postType, $parent = 0, $d = 0) : mixed {
-        $taxonomy = is_array($taxonomy) ? array_shift($taxonomy) : $taxonomy;
-
-        $terms = \Timber::get_terms($taxonomy, [
-            'parent' => $parent,
-            'meta_key' => 'order',
-            'orderby' => 'meta_value',
-            'order' => 'ASC',
-        ]);
-
-        $children = [];
-
-        foreach($terms as $term){
-            $term->depth = $d;
-            $term->terms = self::get_taxonomy_hierarchy($taxonomy, $postType, $term->term_id, $d + 1);
-            $term->posts = \Timber::get_posts([
-                'posts_per_page' => -1,
-                'post_type' => $postType,
-                'orderby' => 'menu_order',
-                'order' => 'ASC',
-                'tax_query' => [
-                    [
-                        'taxonomy' => $taxonomy,
-                        'field' => 'id',
-                        'terms' => $term->term_id,
-                        'include_children' => false
-                    ]
-                ]
-            ]);
-
-            $children[$term->term_id] = $term;
-        }
-
-        return $children;
-    }
 }

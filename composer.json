@@ -3,13 +3,16 @@
     "description": "WP Theme Library",
     "type": "package",
     "license": "MIT",
-    "version": "3.3.1",
+    "version": "4.0.1",
     "authors": [
         {
             "name": "Jarek Majcher",
             "email": "jarek@majcher.me"
         }
     ],
+    "require": {
+        "php": "^8.2"
+    },
     "autoload": {
         "files": ["src/WpHelper.php"],
         "psr-4": {
