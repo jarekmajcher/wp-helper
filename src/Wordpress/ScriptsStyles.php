@@ -79,30 +79,13 @@ class ScriptsStyles extends \Jm\WpHelper\WpHelper {
     public function load_rwd_footer() : void {
         global $post;
 
-        $template = get_page_template_slug();
-        $template = $template === '' || $template === null ? false : str_replace('.php', '', $template);
-
         $styles = ['other'];
-        if(get_post_type()) {
-            $styles[] = 'single-' . get_post_type();
-        }
-        if($template !== false) {
-            $styles[] = $template;
-        }
-        $styles = array_merge($styles, Helper\Acf::get_post_assets('css'));
 
         foreach($styles as $style) {
             $this->style('rwd', $style, false);
         }
 
         $scripts = ['other'];
-        if($template !== false) {
-            $scripts[] = $template;
-        }
-        if(get_post_type()) {
-            $scripts[] = 'single-' . get_post_type();
-        }
-        $scripts = array_merge($scripts, Helper\Acf::get_post_assets('js'));
 
         foreach($scripts as $script) {
             $this->script('rwd', $script, false);

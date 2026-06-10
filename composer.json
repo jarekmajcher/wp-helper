@@ -14,7 +14,6 @@
         "files": ["src/WpHelper.php"],
         "psr-4": {
             "Jm\\WpHelper\\Helper\\": "src/Helper",
-            "Jm\\WpHelper\\Timber\\": "src/Timber",
             "Jm\\WpHelper\\Wordpress\\": "src/Wordpress"
         }
     }
